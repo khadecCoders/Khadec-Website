@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Khadec Technologies - Home</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/favicon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Montserrat:300,400,500,600,700" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/signin.css" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+
+</head>
+
+<body id="body" class="text-center">
+      
+<main class="form-signin" id="footer">
+    <form class="php-email-form" id="signin_form" novalidate>
+      <img class="mb-4" src="assets/img/favicon.png" alt="" width="72" height="57">
+      <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+  
+      <div class="form-floating">
+        <input type="email" class="form-control" id="email" placeholder="name@example.com">
+        <label for="floatingInput">Email address</label>
+      </div>
+      <div class="form-floating">
+        <input type="password" class="form-control" id="password" placeholder="Password">
+        <label for="floatingPassword">Password</label>
+      </div>
+  
+      <!-- <div class="checkbox mb-3">
+        <label>
+          <input type="checkbox" value="remember-me"> Remember me
+        </label>
+      </div> -->
+
+      <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+
+      <div class="checkbox mb-3 mt-3">
+        <div class="loading" id="loading">Signing in, please wait</div>
+        <div class="error-message" id="error-message">Sign in error, wrong password</div>
+      </div>
+
+      <p class="mt-5 mb-3 text-muted">&copy; <script>
+        document.write(new Date().getFullYear())
+      </script></p>
+    </form>
+  </main>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+  <script src="https://smtpjs.com/v3/smtp.js"></script>
+  <script type="module">
+    
+// Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+    import { getDatabase, set, ref, update, onValue, push } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+    import { getStorage, ref as storageRef, uploadBytes, getDownloadURL, uploadBytesResumable  } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-storage.js";
+    import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signOut,signInWithEmailAndPassword  } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyA_zSdigkl32dEqiFcPAxiPWYRgP0kWm2g",
+        authDomain: "khadec-327d2.firebaseapp.com",
+        projectId: "khadec-327d2",
+        storageBucket: "khadec-327d2.appspot.com",
+        messagingSenderId: "590238263984",
+        appId: "1:590238263984:web:2193e1e1f68d8da7aba975"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+    const auth = getAuth(app);
+    const storage = getStorage(app);
+
+      // Send contact email
+        document.getElementById('signin_form').addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        // show loading
+        document.getElementById('loading').classList.add('d-flex');
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+
+        document.getElementById('loading').classList.add('d-flex');
+
+        signInWithEmailAndPassword(auth,email, password)
+            .then((userCredential) => {
+            // Signed in 
+            var user = userCredential.user;
+            window.location.href = 'account/admin/dashboard.html';
+
+            })
+            .catch((error) => {
+                let errorMessage = error.message.replace(/[()]/g," ");
+                let errorMsg = errorMessage.replace('Firebase:',"");
+                document.getElementById('loading').classList.remove('d-flex');
+                document.getElementById('error-message').classList.add('d-flex');
+                document.getElementById('error-message').innerHTML = errorMsg;
+
+                setTimeout(function() {
+                document.getElementById('error-message').classList.remove('d-flex');
+                }, 2000);
+            });
+
+      })
+
+
+
+  </script>
+
+</body>
+
+</html>
