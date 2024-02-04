@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link
+      rel="apple-touch-icon"
+      sizes="76x76"
+      href="../../assets/img/favicon.png"
+    />
+    <link rel="icon" type="image/png" href="../../assets/img/favicon.png" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>Khadec Tech User Dashboard</title>
+    <meta
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no"
+      name="viewport"
+    />
+    <!--     Fonts and icons     -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200"
+      rel="stylesheet"
+    />
+    <link
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    <!-- CSS Files -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../assets/css/paper-dashboard.css" rel="stylesheet" />
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link href="../assets/demo/demo.css" rel="stylesheet" />
+    <link
+      href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="">
+    
+      <!--Add subscriberModal class -->
+      <div class="modal fade show" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content"  style="background-color: rgb(233, 233, 233);">
+              <div class="modal-header">
+                <h5 class="modal-title">Edit user account</h5>
+              </div>
+              <div class="modal-body" id="userDetailsModal">
+                <!-- Loan details -->
+              
+              </div>
+    
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary applyEditChanges" id="create_application">Apply Changes</button>
+              </div>
+            </div>
+          </div>
+      </div>
+
+      
+      <!--Modal class -->
+      <div class="modal fade show" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content" id="modalContent">
+  
+          </div>
+        </div>
+      </div>
+      
+    <div class="wrapper">
+      <div class="sidebar" data-color="white" data-active-color="danger">
+        <div class="logo">
+        <div class="top">
+          <a class="simple-text logo-mini">
+            <div class="logo-image-large" id="logoImage">
+              
+            </div>
+            <!-- <p>CT</p> -->
+          </a>
+          <a class="simple-text logo-small" id="companyName">
+            Company Name
+            
+          </a>
+        </div>
+        <a  id="signed-user"></a>
+        </div>
+        <div class="sidebar-wrapper" style="overflow: hidden">
+          <ul class="nav">
+            <li class="active">
+              <a href="./dashboard.html">
+                <i class="fa fa-credit-card"></i>
+                <p>Subscriptions</p>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="main-panel">
+        <!-- Navbar -->
+        <nav
+          class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent"
+        >
+          <div class="container-fluid">
+            <div class="navbar-wrapper">
+              <div class="navbar-toggle">
+                <button type="button" class="navbar-toggler">
+                  <span class="navbar-toggler-bar bar1"></span>
+                  <span class="navbar-toggler-bar bar2"></span>
+                  <span class="navbar-toggler-bar bar3"></span>
+                </button>
+              </div>
+              <a class="navbar-brand" href="javascript:;"
+                >Dashboard</a
+              >
+            </div>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navigation"
+              aria-controls="navigation-index"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-bar navbar-kebab"></span>
+              <span class="navbar-toggler-bar navbar-kebab"></span>
+              <span class="navbar-toggler-bar navbar-kebab"></span>
+            </button>
+            <div
+              class="collapse navbar-collapse justify-content-end"
+              id="navigation"
+            >
+              <ul class="navbar-nav">
+                <li class="nav-item btn-rotate dropdown">
+                  <a
+                    class="nav-link dropdown-toggle"
+                    href="http://example.com"
+                    id="navbarDropdownMenuLink"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <i class="nc-icon nc-settings-gear-65"></i>
+                    <p>
+                      <span class="d-lg-none d-md-block">Account actions</span>
+                    </p>
+                  </a>
+                  <div
+                    class="dropdown-menu dropdown-menu-right"
+                    aria-labelledby="navbarDropdownMenuLink"
+                  >
+                    <a class="dropdown-item" style="cursor: pointer;" id="log_out">Log Out</a>
+                    <a class="dropdown-item" id="edit_account" style="cursor: pointer;">Edit account details</a>
+                  </div>
+                </li>
+
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <!-- End Navbar -->
+
+        <!-- Main Content -->
+        <div class="content" id="mainContent">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header">
+                  <p class="card-category">Current subscription</p>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead class="text-primary">
+                        <th>
+                          Plan
+                        </th>
+                        <th>
+                          Status
+                        </th>
+                        <th>
+                          Website
+                        </th>
+                        <th>
+                          Start date
+                        </th>
+                        <th>
+                          End date
+                        </th>
+                        <th class="text-right">
+                          Renew subscription
+                        </th>
+                      </thead>
+                      <tbody id="subscribers_table">
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <hr />
+                  <div class="stats">
+                    <!-- <i class="fa fa-history"></i> Updated 3 minutes ago -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="footer footer-black footer-white">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="credits ml-auto">
+                <span class="copyright">
+                  ©
+                  <script>
+                    document.write(new Date().getFullYear());
+                  </script>
+                  , made with <i class="fa fa-heart heart"></i> by Khadec
+                  Technologies
+                </span>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+    <!--   Core JS Files   -->
+    <script src="../assets/js/core/jquery.min.js"></script>
+    <script src="../assets/js/core/popper.min.js"></script>
+    <script src="../assets/js/core/bootstrap.min.js"></script>
+    <!-- <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script> -->
+    <!-- Chart JS -->
+    <!-- <script src="../assets/js/plugins/chartjs.min.js"></script> -->
+    <!--  Notifications Plugin    -->
+    <script src="../assets/js/plugins/bootstrap-notify.js"></script>
+    <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
+    <script
+      src="../assets/js/paper-dashboard.min.js"
+      type="text/javascript"
+    ></script>
+    <!-- Paper Dashboard DEMO methods, don't include it in your project! -->
+    <!-- <script src="../assets/demo/demo.js"></script> -->
+    <script>
+      // $(document).ready(function() {
+      //   // Javascript method's body can be found in assets/assets-for-demo/js/demo.js
+      //   demo.initChartsPages();
+      // });
+    </script>
+
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+      import {
+        getDatabase,
+        set,
+        ref,
+        update,
+        onValue,
+        push,
+        remove,
+      } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+      import {
+        getStorage,
+        ref as storageRef,
+        uploadBytes,
+        getDownloadURL,
+        uploadBytesResumable,
+      } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-storage.js";
+      import {
+        getAuth,
+        createUserWithEmailAndPassword,
+        onAuthStateChanged,
+        signOut,
+      } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyCuyHGrJ_7WMP_V0QGbbZWOYDS_oVA_gaA",
+        authDomain: "khadec-tech.firebaseapp.com",
+        databaseURL: "https://khadec-tech-default-rtdb.firebaseio.com",
+        projectId: "khadec-tech",
+        storageBucket: "khadec-tech.appspot.com",
+        messagingSenderId: "623072304859",
+        appId: "1:623072304859:web:bbb275fbd6773aa6cfb6fe"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const database = getDatabase(app);
+      const auth = getAuth(app);
+      const storage = getStorage(app);
+
+      onAuthStateChanged(auth, (user) => {
+        if(user){
+          var uid = user.uid;
+          var myEmail = user.email;
+
+          const subsRef = ref(database, 'userAccounts/');
+          onValue(subsRef, (snapshot) => {
+            snapshot.forEach(element => {
+            const data = element.val();
+            var key = element.key;
+
+            if(uid === key){
+              let userDiv = `
+                <tr id="">
+                  <td>
+                      US$ ${data.pay_plan}/Month
+                  </td>
+                  <td>
+                    ${data.status === "Active" ? (
+                      `<span class="badge badge-success" style="font-size: small;">Active</span>`
+                    ) : (
+                      `<span class="badge badge-danger" style="font-size: small;">Inactive</span>`
+                    )}
+                  </td>
+                  <td>
+                      ${data.name}
+                  </td>
+                  <td>
+                    ${data.sub_start_date}
+                  </td>
+                  <td>
+                    ${data.sub_end_date}
+                  </td>
+                  <td class="text-right">
+                    ${data.status === "Inactive" ? (
+                      `
+                      <button type="button" class="btn btn-primary btn-sub" id="renew_sub"><a href="https://khadec-payments.000webhostapp.com/comfirm/index.php?payID=${uid}&email=${data.email}&totalAmount=${data.pay_plan}" style="color: white; text-decoration: none;">Paynow</a></button>
+                      `
+                    ) : (
+                      `
+                      <button disabled type="button" class="btn btn-primary btn-sub" id="renew_sub"><a href="" style="color: white; text-decoration: none;">Paynow</a></button>
+                      `
+                    )}
+                  </td>
+                </tr>
+                `
+                document.getElementById('subscribers_table').innerHTML += userDiv;
+                document.getElementById('companyName').innerHTML = data.name;
+
+                if(data.logo === 'None'){
+                  document.getElementById('logoImage').innerHTML = `
+                  <img src="../assets/img/logo-small.png"/>
+                  `
+                }else{
+                  document.getElementById('logoImage').innerHTML = `
+                  <img src="${data.logo}"/>
+                  `
+                }
+
+              document.getElementById('edit_account').addEventListener('click', (e) => {
+                let modContent = `
+                <form class="row g-3" id="loan_form">
+                    <div class="row col-md-12">
+                      <div class="row col-md-4">
+                        <div class="card" style="width: 18rem; height: 16rem; overflow: hidden;">
+                          ${data.logo === "None" ? (
+                            `<img src="../assets/img/default-company.png" class="card-img-top" alt="..." width="400">`
+                          ) : (
+                            `<img src="${data.logo}" class="card-img-top" alt="..." width="400">`
+                          )}
+                        </div>
+                      </div>
+                      <div class="row col-md-8">
+                        <div class="col-md-6">
+                          <label for="interest_rate">Company/Business name</label>
+                          <div class="">
+                            <input type="text" class="form-control" id="edit_company_name" value="${data.name}">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <label for="interest_rate">Email address</label>
+                          <div class="">
+                            <input type="text" class="form-control" id="edit_email_address" value="${data.email}" disabled>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <label for="interest_rate">Choose a new logo</label>
+                          <!-- <div class=""> -->
+                            <input type="file" class="form-control" id="p_sized_photo2">
+                          <!-- </div> -->
+                        </div>
+                        <div class="col-md-6">
+                          <label for="interest_rate">Phone number</label>
+                          <div class="">
+                            <input type="text" class="form-control" id="edit_phone_number" value="${data.phone_number}">
+                          </div>
+                        </div>
+                        <div class="col-md-12">
+                          <label for="interest_rate">Physical address</label>
+                          <div class="">
+                            <input type="text" class="form-control" id="edit_physical_address" value="${data.physical_address}">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                `
+                document.getElementById('userDetailsModal').innerHTML = modContent;
+                showAddUserModal()
+              })
+
+              document.querySelector('.applyEditChanges').addEventListener('click', (e) => {
+                let clientID = e.target.id;
+                strtLoading('Updating changes')
+                update(ref(database, 'userAccounts/' + uid),{
+                  name: document.getElementById('edit_company_name').value,
+                  email: document.getElementById('edit_email_address').value,
+                  phone_number: document.getElementById('edit_phone_number').value,
+                  physical_address: document.getElementById('edit_physical_address').value,
+              }).then(() => {
+                finishedLoading('Subscriber details updated successfully')
+                window.location.reload();
+
+              }).catch((error) => {
+                finishedLoadingError(error.message, "Update failed")
+              })
+              })
+
+              }
+            })
+          });
+
+          document.getElementById('signed-user').innerHTML = myEmail;
+        }else{
+          window.location.href = '../../Login.html'
+        }
+      })
+
+    function showAddUserModal(){
+      const myModalEl = document.getElementById('staticBackdrop2')
+      const modal = new bootstrap.Modal(myModalEl)
+      modal.show()  
+    }
+    
+    function showSignUpModal(){
+      const myModalEl = document.getElementById('staticBackdrop')
+      const modal = new bootstrap.Modal(myModalEl)
+      modal.show()  
+    }
+
+
+    function strtLoading(heading){
+        let modContent = `
+            <div class="modal-header">
+              <h5 class="mb-0">${heading}</h5>
+            </div>
+          <div class="modal-body">
+            <h5>Please wait...</h5>
+            <!-- Modal Spinner -->
+            <div class="spinner-grow spinner-grow-sm text-secondary" role="status">
+              <span class="visually-hidden"></span>
+            </div>
+            <div class="spinner-grow spinner-grow-sm text-warning" role="status">
+              <span class="visually-hidden"></span>
+            </div>
+            <div class="spinner-grow spinner-grow-sm text-success" role="status">
+              <span class="visually-hidden"></span>
+            </div>
+          </div>
+        `
+        document.getElementById('modalContent').innerHTML = modContent;
+        showSignUpModal();
+      }
+
+      function finishedLoading(message){
+       let modContent = `
+            <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Done.</h5>
+            </div>
+          <div class="modal-body">
+            <h5>${message}</h5>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="refreshPage">Close</button>
+          </div>
+          </div>
+        `
+        document.getElementById('modalContent').innerHTML = modContent;
+        // document.getElementById('refreshPage').addEventListener('click', refresh)
+      }
+
+      function finishedLoadingError(error, heading){
+       let modContent = `
+            <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Error.</h5>
+            </div>
+          <div class="modal-body">
+            <h5>${heading}</h5>
+            <p>${error}</p>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="refreshPage">Close</button>
+          </div>
+          </div>
+        `
+        document.getElementById('modalContent').innerHTML = modContent;
+        // document.getElementById('refreshPage').addEventListener('click', refresh)
+      }
+
+    document.getElementById("log_out").addEventListener("click", () => {
+      signOut(auth)
+        .then(() => {
+          // Sign-out successful.
+          window.location.href = "../../Login.html";
+        })
+        .catch((error) => {
+          // An error happened.
+        });
+    });
+    </script>
+  </body>
+</html>

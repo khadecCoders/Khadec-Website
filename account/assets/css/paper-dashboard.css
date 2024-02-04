@@ -1,25 +1,4 @@
-/*!
 
- =========================================================
- * Paper Dashboard 2 - v2.0.1
- =========================================================
-
- * Product Page: https://www.creative-tim.com/product/paper-dashboard-2
- * Copyright 2020 Creative Tim (http://www.creative-tim.com)
-
- * Coded by www.creative-tim.com
-
- =========================================================
-
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
- */
-/*!
-Animate.css - http://daneden.me/animate
-Licensed under the MIT license - http://opensource.org/licenses/MIT
-
-Copyright (c) 2015 Daniel Eden
-*/
 .animated {
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
@@ -2981,8 +2960,10 @@ License - nucleoapp.com/license/
     width: 100%; }
 
 .table-responsive {
-  overflow: scroll;
-  padding-bottom: 10px; }
+  overflow: auto;
+  padding-bottom: 10px;
+  max-height: 50vh;
+   }
 
 #tables .table-responsive {
   margin-bottom: 30px; }
@@ -3336,15 +3317,21 @@ License - nucleoapp.com/license/
 .off-canvas-sidebar .nav > li > a:focus {
   background: rgba(200, 200, 200, 0.2); }
 
+.main-panel2 {
+  position: relative;
+  background-color: #f4f3ef;
+  transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1); }
+
 .main-panel {
   position: relative;
   float: right;
   width: calc(100% - 260px);
   background-color: #f4f3ef;
   transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1); }
+
   .main-panel > .content {
     padding: 0 30px 30px;
-    min-height: calc(100vh - px);
+    min-height: calc(100vh - 260px);
     margin-top: 93px; }
   .main-panel > .navbar {
     margin-bottom: 0; }
@@ -3352,7 +3339,21 @@ License - nucleoapp.com/license/
     margin-bottom: 50px; }
 
 .perfect-scrollbar-on .sidebar,
-.perfect-scrollbar-on .main-panel {
+.perfect-scrollbar-on .main-panel2 {
+  height: 100%;
+  max-height: 100%; }
+
+  .main-panel2 > .content {
+    padding: 0 30px 30px;
+    min-height: calc(100vh - 260px);
+    margin-top: 93px; }
+  /* .main-panel2 > .navbar {
+    margin-bottom: 0; }
+  .main-panel2 .header {
+    margin-bottom: 50px; } */
+
+.perfect-scrollbar-on .sidebar,
+.perfect-scrollbar-on .main-panel2 {
   height: 100%;
   max-height: 100%; }
 
@@ -4215,4 +4216,7 @@ License - nucleoapp.com/license/
     width: 38%;
     padding: 15px; } }
 
+    .btn-sub{
+      padding: 5px;
+    }
 /*# sourceMappingURL=paper-dashboard.css.map */

@@ -27,6 +27,20 @@
   <link href="assets/css/style.css" rel="stylesheet">
 </head>
 
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+  (function(){
+  var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+  s1.async=true;
+  s1.src='https://embed.tawk.to/65ba60c70ff6374032c7007d/1hlg0k4cr';
+  s1.charset='UTF-8';
+  s1.setAttribute('crossorigin','*');
+  s0.parentNode.insertBefore(s1,s0);
+  })();
+  </script>
+  <!--End of Tawk.to Script-->
+  
 <body id="body" class="">
 
   <!-- ======= Header ======= -->
@@ -625,12 +639,13 @@
 
   // Your web app's Firebase configuration
   const firebaseConfig = {
-    apiKey: "AIzaSyA_zSdigkl32dEqiFcPAxiPWYRgP0kWm2g",
-    authDomain: "khadec-327d2.firebaseapp.com",
-    projectId: "khadec-327d2",
-    storageBucket: "khadec-327d2.appspot.com",
-    messagingSenderId: "590238263984",
-    appId: "1:590238263984:web:2193e1e1f68d8da7aba975"
+    apiKey: "AIzaSyCuyHGrJ_7WMP_V0QGbbZWOYDS_oVA_gaA",
+    authDomain: "khadec-tech.firebaseapp.com",
+    databaseURL: "https://khadec-tech-default-rtdb.firebaseio.com",
+    projectId: "khadec-tech",
+    storageBucket: "khadec-tech.appspot.com",
+    messagingSenderId: "623072304859",
+    appId: "1:623072304859:web:bbb275fbd6773aa6cfb6fe"
   };
 
   // Initialize Firebase
@@ -721,6 +736,7 @@
           email: myEmail,
         })
         alert("Subscribed to Khadec Tech as "+ myEmail)
+        document.getElementById('subscribe_form').reset();
       })
 
       // Send contact email

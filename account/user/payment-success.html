@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment status</title>
+
+        <!-- Favicons -->
+        <link href="../../assets/img/favicon.png" rel="icon">
+        <link href="../../assets/img/favicon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="../../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+
+    <!-- Template Main CSS File -->
+   <link href="../../assets/css/style.css" rel="stylesheet">
+     <!--
+    <link rel="stylesheet" href="/assets/css/modals.css">
+    <link rel="stylesheet" href="/assets/css/pricing.css"> -->
+    <style>
+
+
+    </style>
+
+</head>
+<body id="body">
+
+    <div class="container-fluid loadingSection align-items-center justify-content-center" id="loadingSection">
+        <div class="">Loading</div>
+        <div class="spinner-grow spinner-grow-sm text-secondary" role="status">
+        <span class="visually-hidden">Loading...</span>
+        </div>
+        <div class="spinner-grow spinner-grow-sm text-warning" role="status">
+        <span class="visually-hidden">Loading...</span>
+        </div>
+        <div class="spinner-grow spinner-grow-sm text-success" role="status">
+        <span class="visually-hidden">Loading...</span>
+        </div>
+        <div class="spinner-grow spinner-grow-sm text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+
+    <script type="module">
+
+        var queryString = location.search.substring(1);
+        var a = queryString.split("|");
+        var payProceed = a[0]
+        var payID = a[1];
+        var pricePackage = a[2];
+        var userEmail= a[3];
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.4/firebase-app.js";
+        import { getDatabase, set, ref, update, onValue, push } from "https://www.gstatic.com/firebasejs/9.9.4/firebase-database.js";
+        import { getStorage, ref as storageRef, uploadBytes, getDownloadURL, uploadBytesResumable  } from "https://www.gstatic.com/firebasejs/9.9.4/firebase-storage.js";
+        import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signOut  } from "https://www.gstatic.com/firebasejs/9.9.4/firebase-auth.js";
+    
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+        apiKey: "AIzaSyCuyHGrJ_7WMP_V0QGbbZWOYDS_oVA_gaA",
+        authDomain: "khadec-tech.firebaseapp.com",
+        databaseURL: "https://khadec-tech-default-rtdb.firebaseio.com",
+        projectId: "khadec-tech",
+        storageBucket: "khadec-tech.appspot.com",
+        messagingSenderId: "623072304859",
+        appId: "1:623072304859:web:bbb275fbd6773aa6cfb6fe"
+        };
+
+// Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const auth = getAuth(app);
+        const storage = getStorage(app);
+
+        var updatedProp = false;
+
+        function updateProperty(){
+            if(payProceed === "proceed"){
+                let startDate = new Date().toDateString();
+                let endDate = getSubEndingdate(new Date(startDate));
+
+                // Get the subscription end date
+                function getSubEndingdate (subStartDate){
+                    var subEndMonth;
+                    var subEndYear;
+
+                    var subEndMonthTemp = subStartDate.getMonth() + 2;
+                        if(subEndMonthTemp < 13){
+                            subEndMonth = subEndMonthTemp;
+                            subEndYear = subStartDate.getFullYear()
+
+                        }else{
+                            subEndYear = subStartDate.getFullYear() + 1;
+                            subEndMonth = subEndMonthTemp - 12;
+                    }
+
+                    return new Date(`${subEndMonth} ${subStartDate.getDate()} ${subEndYear}`).toDateString();
+                }
+
+                if(endDate !== '' || null){
+                    update(ref(database, 'userAccounts/' + payID), {
+                        status: 'Active',
+                        sub_start_date: startDate,
+                        sub_end_date: endDate
+                    })
+
+                    Email.send({
+                    Host : "smtp.elasticemail.com",
+                    Username : "khadectech21@gmail.com",
+                    Password : "3B6024D1E8031DDD5A75BFC9F16277B04E82",
+                    To : ["khadectech21@gmail.com", "decentncubet04@gmail.com","khayelihlencube53@gmail.com"],
+                    From : "khadectech21@gmail.com",
+                    Subject : `Web hosting payment confirmation.`,
+                    Body : `
+                        A successfull payment of ${pricePackage} was made to your paynow account by ${userEmail} for website hosting. 
+                    `
+                    }).then(
+                        message => {
+                            if(message = "ok"){
+                            // finishedLoading();
+                            }
+                        }).catch((error) => {
+                    // finishedLoadingError(error)
+                    alert(error.message)
+
+                    })
+                    updatedProp = true
+                }{
+                // ...
+                }
+            }else{
+                // .....
+            }
+
+        }
+
+        function startLoading(){
+            // ......
+            console.log('started')
+            updateProperty();
+
+            if(updatedProp){
+            // ...Show success message
+            document.getElementById('body').innerHTML = `
+            <div class="container-fluid loadingSection align-items-center justify-content-center" id="successSection" style="width: 70%;">
+                <div class="card text-center">
+                    <div class="card-header">
+                    Update
+                    </div>
+                    <div class="card-body">
+                    <h5 class="card-title">Payment successful</h5>
+                    <p class="card-text">Your payment to Khadec Tech has been processed. If your website is not visible on the site after an hour contact <br> <a href="">+263 78 637 6580 | +263 778 668 835 | khadectech21@gmail.com</a></p>
+                    <a href="https://khadec-tech.web.app/account/user/dashboard.html" class="btn btn-primary">Go to Dashboard</a>
+                    </div>
+                </div>    
+            </div>
+            `
+
+        }else{
+            //....Keep loading
+            document.getElementById('body').innerHTML = `
+            <div class="container-fluid loadingSection align-items-center justify-content-center" id="loadingSection">
+                <div class="">Loading</div>
+                <div class="spinner-grow spinner-grow-sm text-secondary" role="status">
+                <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="spinner-grow spinner-grow-sm text-warning" role="status">
+                <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="spinner-grow spinner-grow-sm text-success" role="status">
+                <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="spinner-grow spinner-grow-sm text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+
+            `
+        }
+        }
+        
+        window.onload = startLoading();
+
+    </script>
+</body>
+</html>
